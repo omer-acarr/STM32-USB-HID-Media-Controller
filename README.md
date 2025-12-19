@@ -1,30 +1,25 @@
-# HidKbd
-STM32 USB HID keyboard std 101 key with optional  led support and volume media control implementation 
+# STM32 USB HID Media Controller (Volume/Mute)
 
-It's  a sample SW4STM32 project running on STM32Dicovery F4 board  stared from CubeMX "HID" mouse code, 
+This project is a driverless USB HID application developed for STM32 microcontrollers that allows you to control your computer's volume (Volume Up/Down/Mute).
 
-Shall work on pmst STm32 with USB 
+Based on the “Consumer Control” structure in the open-source `diabolo38/HidKbd` project, it is an embedded software solution optimized solely for multimedia control, stripped of unnecessary keyboard functions.
 
-Note the CubeMX ioc can  still be used (CubeF4 lib v1.14.0 and CubeMX 4.18.0) , but generated hid class files got copied on user src and inc folder to be fully customized. 
-The generated usb class files are exclude from build 
+## 🎯 Technical Purpose of the Project
+It was developed to analyze the complex structure of the USB protocol and the **Device Class Definition for HID** standard. It focuses particularly on the following topics:
 
-#build config 
+* **USB Report Descriptors:** Analysis of the differences in descriptors between a standard keyboard and a Media Controller (Consumer Device).
+* **Endpoint Interrupts:** Timing and data packet structure of USB interrupt transfers.
+* **State Machine:** Button debounce and management of USB connection states (Suspend/Resume).
 
-- Debug 
+## 🛠 Hardware and Software
+* **MCU:** STM32F103 (BluePill) / STM32F4 Series
+* **Interface:** USB 2.0 Full Speed (12 Mbit/s)
+* **Class:** Human Interface Device (HID) - No Driver Required
 
-101 std + volume  control (no led) 
+## 🚀 How Does It Work?
+When connected to a computer, the device identifies itself as a “Multimedia Keyboard”. When the defined GPIO pins (Buttons) are pressed, the corresponding USB HID report (e.g., `0xEA` - Volume Down) is sent to the operating system. It works as plug-and-play on Windows, Linux, and macOS.
 
-- Debuf_led   
+---
+*Adapted from open-source HID implementations for embedded systems study purposes.* 
 
-101 std + led handling and volume control  
-keyboard leds reflected on Discovery F4 user leds 
 
-#how to use 
-No fency user UI was done 
-
-to send test string or volume keys debuf the f/W and place a brake point in main,  modify "send" variable to do what needed.
-
-#TODO
-For complete  keyboard support  quite a lot of work to handle key up and down management and sent over usb is still required.
-
-Here simple sequence with delay was used.
